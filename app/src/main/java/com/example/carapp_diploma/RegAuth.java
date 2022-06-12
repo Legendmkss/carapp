@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.carapp_diploma.Models.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -145,7 +146,7 @@ public class RegAuth extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Snackbar.make(root, "Пользователь зарегистрирован", Snackbar.LENGTH_SHORT).show();
+                                                Toast.makeText(RegAuth.this, "Пользователь зарегистрирован", Toast.LENGTH_LONG).show();
                                             }
                                         });
                             }

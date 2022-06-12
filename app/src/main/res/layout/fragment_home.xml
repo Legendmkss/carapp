@@ -5,13 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ваши расходы:"
-        android:textSize="26dp"
-        android:layout_gravity="center"
-        />
-
-
+    <ListView
+        android:id="@+id/list_events"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

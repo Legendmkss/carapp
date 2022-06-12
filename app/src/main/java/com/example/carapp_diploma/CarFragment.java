@@ -1,7 +1,10 @@
 package com.example.carapp_diploma;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,14 +14,19 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.carapp_diploma.Models.Car;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class CarFragment extends Fragment {
 
     DatabaseReference cars;
+
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -30,7 +38,10 @@ public class CarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        cars = FirebaseDatabase.getInstance().getReference("Cars");
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        String onlineUserID = mUser.getUid();
+        cars = FirebaseDatabase.getInstance().getReference("Users").child("Cars").child(onlineUserID);
 
         View view = inflater.inflate(R.layout.fragment_car, container, false);
 
@@ -58,9 +69,16 @@ public class CarFragment extends Fragment {
 
                 Car car = new Car(name, brand, fuel, year, mileage, consumption);
 
-                cars.child(id).setValue(car);
+                cars.child(id).setValue(car).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(getActivity(), "Автомобиль добавлен", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
-                Toast.makeText(getActivity(), "Автомобиль добавлен", Toast.LENGTH_LONG).show();
+
 
                 NameCar.getText().clear();
                 Brand.getText().clear();
@@ -68,6 +86,7 @@ public class CarFragment extends Fragment {
                 Year.getText().clear();
                 Mileage.getText().clear();
                 Consumption.getText().clear();
+
             }
         });
 

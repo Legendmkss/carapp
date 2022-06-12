@@ -83,6 +83,8 @@ public class ChooseCalculatorFragmentThree extends Fragment {
 
         imageButton = (ImageButton) view.findViewById(R.id.imageButton);
 
+
+
         buttonThree.setOnClickListener(v -> getConsumption());
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,8 @@ public class ChooseCalculatorFragmentThree extends Fragment {
                 getInfoCoefficient();
             }
         });
+
+
 
 
         return view;
@@ -102,15 +106,18 @@ public class ChooseCalculatorFragmentThree extends Fragment {
         View Info = inflater.inflate(R.layout.info_coefficient, null);
         myDialog.setView(Info);
 
+        Button coefficient_button = (Button) Info.findViewById(R.id.coefficient_button);
+
         AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
         dialog.show();
 
-        myDialog.setPositiveButton("Назад", new DialogInterface.OnClickListener() {
+        coefficient_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                dialogInterface.dismiss();
+            public void onClick(View v) {
+                dialog.hide();
             }
         });
+
     }
 }
